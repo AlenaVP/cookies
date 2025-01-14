@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   standalone: false,
@@ -107,6 +108,14 @@ export class AppComponent {
     },
   ];
 
+  form = this.fb.group({
+    product: ["", Validators.required],
+    name: ["", Validators.required],
+    phone: ["", Validators.required],
+  });
+
+  constructor(private fb: FormBuilder) { }
+
   scrollTo(target: HTMLElement) {
     target.scrollIntoView({ behavior: 'smooth' });
   }
@@ -132,5 +141,12 @@ export class AppComponent {
     this.productsData.forEach((item) => {
       item.price = +(item.basePrice * coefficient).toFixed(1);
     });
+  }
+
+  confirmOrder() {
+    if (this.form.valid) {
+      alert('Спасибо за заказ! Мы скоро свяжемся с вами!');
+      this.form.reset();
+    }
   }
 }
